@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Meal Planning Database</title>
+
+    <link rel="stylesheet" href="/vendors/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/styles/style.css">
+
+    <script type="text/javascript" src="/vendors/angular.min.js"></script>
+    <script type="text/javascript" src="/assets/scripts/app.js"></script>
+</head>
+<body ng-app="myApp">
+    <div class="planner" ng-controller="PlanController">
+        <div class="container">
+            <h1 id="welcome" class="lead">Welcome, {{userName}}!</h1>
+        </div>
+
+        <div class = "list-container" ng-include = "'list.html'">
+
+        </div>
+        <div class = "week-container" ng-include = "'week.html'" >
+
+        </div>
+        <div class = "meal-container" ng-include="'meals.html'" >
+
+
+        </div>
+
+    </div>
+</body>
+</html>

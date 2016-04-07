@@ -1,0 +1,46 @@
+<div class = "meal-box-col">
+    <p>meals go here</p>
+        <div class = "breakfasts">
+            <button ng-click="newMeal('breakfast')">New Breakfast </button>
+            <select size = "12" name = "breakfast"ng-model="breakfast.id" ng-dblclick="editMeal(breakfast.id)">
+                <option ng-repeat="meal in arrBreakfasts" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
+            </select>
+        </div>
+        <div class = "lunches">
+            <button ng-click="newMeal('lunch')">New Lunch </button>
+            <select size = "12" name = "lunch"ng-model="lunch.id" ng-dblclick="editMeal(lunch.id)">
+                <option ng-repeat="meal in arrLunches" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
+            </select>
+
+        </div>
+        <div class = "dinners">
+            <button ng-click="newMeal('dinner')">New Dinner </button>
+        </div>
+        <select size = "12" name = "dinner"ng-model="dinner.id" ng-dblclick="editMeal(dinner.id)">
+            <option ng-repeat="meal in arrDinners" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
+        </select>
+</div>
+
+
+<div class = "meal-edit-col">
+    <div ng-show="showMealForm">
+
+        <form novalidate class="meal-form" name = "frmMeal">
+            <input name = "label" ng-model="meal.label" type = "text" placeholder="enter description"  />
+            <textarea name = "dishes" ng-model = "meal.dishes"></textarea>
+            <textarea name = "ingredients" ng-model = "meal.ingredients"></textarea>
+            <textarea name = "instructions" ng-model = "meal.instructions"></textarea>
+
+
+
+
+            <input type="submit"  value="Save" ng-click = "saveMeal(meal)" />
+            <button ng-click="cancelMeal()">Cancel </button>
+            <button ng-click="deleteMeal()">Delete </button>
+
+        </form>
+
+
+    </div>
+
+</div>
