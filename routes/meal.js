@@ -82,7 +82,7 @@ router.put("/*", function(req,res){
       res.status(500).send(error);
       done();
     });
-  })
+    });
 });
 
 router.get("/*", function(req,res){
@@ -96,7 +96,7 @@ router.get("/*", function(req,res){
       return;
     }
     var results=[];
-    var query = client.query('SELECT tbl_meals.* FROM tbl_meals;');
+    var query = client.query('SELECT tbl_meals.* FROM tbl_meals ORDER BY fld_meal_type, fld_meal_label;');
     query.on('row', function(row){
       results.push(row);
     });
@@ -113,6 +113,35 @@ router.get("/*", function(req,res){
     });
   })
 });
+
+router.delete("/:id", function(req,res){
+    console.log("in app js for delete", req.params.id);
+    var nukeId = req.params.id;
+
+    pg.connect(connectionString, function(err, client, done){
+    if (err){
+      console.log('error connecting to DB:', err);
+      res.status(500).send(err);
+      done();
+      return;
+    }
+
+    strSql = "DELETE FROM  tbl_meals  WHERE id = '" + nukeId + "';";
+    console.log("strSql=", strSql)
+    var query = client.query(strSql);
+    query.on('end', function(){
+      res.status(200).send("successful delete of meal");
+      done();
+    });
+    query.on('error', function(error){
+      console.log("error error delting meal:", error);
+      res.status(500).send(error);
+      done();
+    });
+    });
+
+});
+
 
 
 

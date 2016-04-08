@@ -2,13 +2,13 @@
     <p>meals go here</p>
         <div class = "breakfasts">
             <button ng-click="newMeal('breakfast')">New Breakfast </button>
-            <select size = "12" name = "breakfast"ng-model="breakfast.id" ng-dblclick="editMeal(breakfast.id)">
+            <select size = "12" name = "breakfast"ng-model="breakfast.id" ng-click="editMeal(breakfast.id)">
                 <option ng-repeat="meal in arrBreakfasts" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
             </select>
         </div>
         <div class = "lunches">
             <button ng-click="newMeal('lunch')">New Lunch </button>
-            <select size = "12" name = "lunch"ng-model="lunch.id" ng-dblclick="editMeal(lunch.id)">
+            <select size = "12" name = "lunch"ng-model="lunch.id" ng-click="editMeal(lunch.id)">
                 <option ng-repeat="meal in arrLunches" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
             </select>
 
@@ -16,7 +16,7 @@
         <div class = "dinners">
             <button ng-click="newMeal('dinner')">New Dinner </button>
         </div>
-        <select size = "12" name = "dinner"ng-model="dinner.id" ng-dblclick="editMeal(dinner.id)">
+        <select size = "12" name = "dinner" ng-model="dinner.id" ng-click="editMeal(dinner.id)">
             <option ng-repeat="meal in arrDinners" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
         </select>
 </div>

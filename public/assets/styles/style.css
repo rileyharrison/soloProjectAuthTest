@@ -9,6 +9,9 @@
 
 
 }
+.week-day{
+    border: 1px solid black;
+}
 .meal-container{
     width: 50%;
     float:right;

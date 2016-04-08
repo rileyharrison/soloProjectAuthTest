@@ -17,13 +17,38 @@ myApp.controller('UserController', ['$scope', '$http', '$window', function($scop
 
 myApp.controller('PlanController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.userName;
+    // meals variables
     $scope.arrBreakfasts = [];
     $scope.arrLunches = [];
     $scope.arrDinners = [];
     var arrMeals = [];
 
+    // days variables
+    //$scope.weekStart = now;
+    var newDate = new Date();
+    for (var i=0; i<7; i++){
+        newDate.setDate(newDate.getDate() +1);
+        console.log(newDate.toDateString());
+
+    };
+
+
+
+    $scope.arrWeek = [];
+    $scope.arrWeek.push({"date":"Monday, 11 April","breakfast_label":"eggs"});
+    $scope.arrWeek.push({"date":"Tuesday, 12 April","breakfast_label":"toast"});
+    $scope.arrWeek.push({"date":"Wednesday, 13 April","breakfast_label":"pancakes"});
+    $scope.arrWeek.push({"date":"Thursday, 14 April","breakfast_label":"cereal"});
+    $scope.arrWeek.push({"date":"Friday, 15 April","breakfast_label":"maltomeal"});
+    $scope.arrWeek.push({"date":"Saturday, 16 April","breakfast_label":"cereal"});
+    $scope.arrWeek.push({"date":"Sunday, 17 April","breakfast_label":"toast, juice and eggs"});
+
+
+
+
     // This happens after page load, which means it has authenticated if it was ever going to
     // NOT SECURE
+    getDays();
     getMeals();
 
     $http.get('/user').then(function(response) {
@@ -44,6 +69,31 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     };
     $scope.cancelMeal=function(){
         $scope.showMealForm = false;
+
+    };
+    $scope.deleteMeal = function(){
+        var nukeId = $scope.meal.id;
+        console.log("Fixing to delete meal with id: ", $scope.meal.id);
+
+        // check if meal exists
+        if ($scope.meal.id == undefined){
+            // close the form
+            $scope.showMealForm = false;
+            return;
+        };
+
+
+        if($window.confirm('You are about to delete this meal. Are you sure?')) {
+                console.log("gonna nuke", nukeId) ;
+                $http.delete("/meal/" + nukeId).then(function(response){
+                // getVillains();
+                $scope.showMealForm = false;
+                getMeals();
+
+
+
+            });
+        } ;
 
     };
     $scope.editMeal = function(mealId){
@@ -91,14 +141,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             });
         }
 
-        //check for new or update
 
-
-
-
-        // send a post request to meal.js.
-        // Figure out how to make sure that this is what I want to do, and that it knows
-        // this is inserting a meal, not UPDATE a meal or INSERT something else.
     }
 
     function getMeals(){
@@ -131,7 +174,20 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
         });
 
-        };
+    };
+
+    function myFormatDate(dateString){
+        // get a given date string, if it's not empty, convert it to something sensible
+        var arrMonths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+        if (dateString != null){
+            var result;
+            var myDate = new Date(dateString);
+            result =  (myDate.getDate()+1) +  arrMonths[myDate.getMonth()] + myDate.getFullYear();
+        } else {
+            result = '';
+        }
+        return result;
+    };
 
 
 }]);

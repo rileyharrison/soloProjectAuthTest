@@ -1,3 +1,21 @@
-<p>
-    week view goes here
-</p>
+
+<!-- ng-disabled for "slide in a meal" buttons when each meal is selected.
+// select of meal makes each one selected.
+// if deleted, selected reset. getmeals()?
+// one week range. Array of dates. week start variable, reset by next or prev.
+// getDates or getDays is an sql statement for the week.
+// when a meal is "slid" in, check if date exists . If exists, update, else insert.
+// figure out schema for tbl_dates
+// date, breakfast_meal, breakfast_cook, in_list
+// get dates populates one week array of objects. Store id if is one, empty if not.
+// This is how we can check if exists for update or insert.
+-->
+<button ng-click = "prevWeek()">Prev</button>
+
+<div ng-repeat="day  in arrWeek" class = "week-day">
+    <p>{{day.date}}</p>
+    <p>Breakfast:{{day.breakfast_label}}</p>
+    <p>Lunch:{{day.lunch_label}}</p>
+    <p>Dinner:{{day.dinner_label}}</p>
+</div>
+<button ng-click = "nextWeek()">Next</button>
