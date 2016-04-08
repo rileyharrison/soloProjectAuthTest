@@ -142,7 +142,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                     console.log("day = ", day);
 
                     // stick a day into the array
-                    
+
                     //console.log(meal);
             });
 
@@ -203,8 +203,25 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         };
 
     };
-    $scope.editMeal = function(mealId){
+    $scope.clearBreakfast = function(){
+        console.log("Clear breakfast ID");
+        $scope.breakfast_id="";
+    };
+    $scope.editMeal = function(mealId, mealType){
         $scope.meal = {};
+        console.log("should we clear", mealType);
+        console.log("mealid length", mealId.length);
+        if (mealId.length == 0){
+            if (mealType =="breakfast"){
+                $scope.breakfast_id="";
+            }
+            if (mealType =="lunch"){
+                $scope.lunch_id="";
+            }
+            if (mealType =="dinner"){
+                $scope.dinner_id="";
+            }
+        }
 
 
         console.log("going to edit meal with id:", mealId);
