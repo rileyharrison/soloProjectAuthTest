@@ -11,6 +11,7 @@ var index = require('./routes/index');
 var user = require('./routes/user');
 var register = require('./routes/register');
 var meal = require('./routes/meal');
+var day = require('./routes/day');
 
 
 app.use(bodyParser.json());
@@ -35,6 +36,7 @@ app.use('/register', register);
 app.use('/user', user);
 app.use('/', index);
 app.use('/meal', meal);
+app.use('/day', day);
 
 // Serve back static files
 app.use(express.static('public'));

@@ -8,17 +8,16 @@ var pg = require('pg');
 
 router.post("/*", function(req,res){
 
-    // post to insert new meal
-    var meal_type = req.body.mealType;
-    var meal_label = req.body.label;
-    var meal_dishes = req.body.dishes;
-    var meal_ingredients = req.body.ingredients;
-    var meal_instructions = req.body.instructions;
+    // post to insert a new day
+    console.log("in server day.js, inserting new day:",req.body);
 
+    var meal_date = req.body.meal_date;
+    var breakfast_id = req.body.breakfast_id;
+    var lunch_id = req.body.lunch_id;
+    var dinner_id = req.body.dinner_id;
     var strSql = '';
     var arrFields =[];
 
-    console.log("in server meal.js, saving new meal:",req.body);
     pg.connect(connectionString, function(err, client, done){
         if (err){
           console.log('error connecting to DB:', err);
@@ -27,9 +26,9 @@ router.post("/*", function(req,res){
           return;
     }
 
-    strSql = 'INSERT INTO tbl_meals ("fld_meal_type", "fld_meal_label", "fld_meal_dishes","fld_meal_ingredients", "fld_meal_instructions") '
-    strSql += 'VALUES ($1,$2,$3,$4,$5);';
-    arrFields = [meal_type, meal_label, meal_dishes, meal_ingredients, meal_instructions];
+    strSql = 'INSERT INTO tbl_days ("meal_date", "breakfast_id", "lunch_id", "dinner_id")';
+    strSql += 'VALUES ($1,$2,$3,$4);';
+    arrFields = [meal_date, breakfast_id, lunch_id, dinner_id];
     var query = client.query(strSql,arrFields);
     console.log("strSql = ", strSql);
     console.log("arrFields = ", arrFields);
@@ -39,7 +38,7 @@ router.post("/*", function(req,res){
     });
 
     query.on('error', function(error){
-      console.log("error inserting task into DB:", error);
+      console.log("error inserting day into DB:", error);
       res.status(500).send(error);
       done();
     });
@@ -85,9 +84,16 @@ router.put("/*", function(req,res){
     });
 });
 
-router.get("/*", function(req,res){
+router.get("/:start/:end", function(req,res){
 
-  console.log("hey you got some meals!");
+  var start_date = req.params.start;
+  var end_date = req.params.end;
+  console.log("hey you will get some days from ", start_date, "to", end_date);
+
+
+
+
+
   pg.connect(connectionString, function(err, client, done){
     if (err){
       console.log('error connecting to DB:', err);
@@ -96,8 +102,9 @@ router.get("/*", function(req,res){
       return;
     }
     var results=[];
-    var query = client.query('SELECT tbl_meals.* FROM tbl_meals ORDER BY fld_meal_type, fld_meal_label;');
+    var query = client.query("SELECT tbl_days.* FROM tbl_days WHERE meal_date >= '" + start_date + "' AND meal_date <= '" + end_date + "';");
     query.on('row', function(row){
+
       results.push(row);
     });
     query.on('end', function(){
@@ -106,13 +113,14 @@ router.get("/*", function(req,res){
     });
 
     query.on('error', function(error){
-      console.log("error returning tasks:", error);
+      console.log("error returning days:", error);
       res.status(500).send(error);
       done();
 
-    });
+  });
 });
 });
+
 
 router.delete("/:id", function(req,res){
     console.log("in app js for delete", req.params.id);

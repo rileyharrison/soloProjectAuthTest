@@ -13,9 +13,9 @@
 <button ng-click = "prevWeek()">Prev</button>
 
 <div ng-repeat="day  in arrWeek" class = "week-day">
-    <p>{{day.date}}</p>
-    <p>Breakfast:{{day.breakfast_label}}</p>
-    <p>Lunch:{{day.lunch_label}}</p>
-    <p>Dinner:{{day.dinner_label}}</p>
+    <p>Date:{{day.meal_date}}</p>
+    <p>Breakfast:{{day.breakfast_label}}<button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.day_id)" >grab Breakfast</button></p>
+    <p>Lunch:{{day.lunch_label}}<button class = "grab-meal" ng-click = "grabLunch(day.meal_date, day.day_id)" >grab Lunch</button></p>
+    <p>Dinner:{{day.dinner_label}}<button class = "grab-meal" ng-click = "grabDinner(day.meal_date, day.day_id)" >grab Dinner</button></p>
 </div>
 <button ng-click = "nextWeek()">Next</button>

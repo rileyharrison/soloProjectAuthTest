@@ -17,40 +17,6 @@ myApp.controller('UserController', ['$scope', '$http', '$window', function($scop
 
 myApp.controller('PlanController', ['$scope', '$http', '$window', function($scope, $http, $window) {
     $scope.userName;
-    // meals variables
-    $scope.arrBreakfasts = [];
-    $scope.arrLunches = [];
-    $scope.arrDinners = [];
-    var arrMeals = [];
-
-    // days variables
-    //$scope.weekStart = now;
-    var newDate = new Date();
-    for (var i=0; i<7; i++){
-        newDate.setDate(newDate.getDate() +1);
-        console.log(newDate.toDateString());
-
-    };
-
-
-
-    $scope.arrWeek = [];
-    $scope.arrWeek.push({"date":"Monday, 11 April","breakfast_label":"eggs"});
-    $scope.arrWeek.push({"date":"Tuesday, 12 April","breakfast_label":"toast"});
-    $scope.arrWeek.push({"date":"Wednesday, 13 April","breakfast_label":"pancakes"});
-    $scope.arrWeek.push({"date":"Thursday, 14 April","breakfast_label":"cereal"});
-    $scope.arrWeek.push({"date":"Friday, 15 April","breakfast_label":"maltomeal"});
-    $scope.arrWeek.push({"date":"Saturday, 16 April","breakfast_label":"cereal"});
-    $scope.arrWeek.push({"date":"Sunday, 17 April","breakfast_label":"toast, juice and eggs"});
-
-
-
-
-    // This happens after page load, which means it has authenticated if it was ever going to
-    // NOT SECURE
-    getDays();
-    getMeals();
-
     $http.get('/user').then(function(response) {
         if(response.data) {
             $scope.userName = response.data.username;
@@ -59,6 +25,147 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             $window.location.href = '/index.html';
         }
     });
+    // This happens after page load, which means it has authenticated if it was ever going to
+    // NOT SECURE
+
+    // meals variables
+    $scope.arrBreakfasts = [];
+    $scope.arrLunches = [];
+    $scope.arrDinners = [];
+    var arrMeals = [];
+
+    // days variables
+    //$scope.weekStart = now;
+    if ($scope.weekStart == undefined){
+        $scope.weekStart = new Date();
+    }
+    $scope.test = 5;
+    console.log("scope.weekStart=", $scope.weekStart);
+
+
+
+
+
+
+
+
+    getDays();
+    getMeals();
+
+    $scope.grabBreakfast = function(mealDate, dayId){
+        console.log("I am going to try and stick a breakfast into this date", mealDate, "with meal id", $scope.breakfast_id, "day id", dayId);
+        var day = {};
+        day.meal_date = mealDate;
+        day.breakfast_id = $scope.breakfast_id;
+        if (dayId == undefined){
+            console.log("going to insert a day");
+            $http.post("/day", day).then(function(response){
+                console.log("day saved", response);
+                getDays();
+            });
+        } else {
+            day.id = dayId;
+            $http.put("/day", day).then(function(response){
+                console.log("day updated", response);
+                getDays();
+            });
+        };
+    };
+    $scope.grabLunch = function(mealDate, dayId){
+        console.log("I am going to try and stick a lunch into this date", mealDate, "with id", $scope.lunch_id, "day id", dayId);
+        var day = {};
+        day.meal_date = mealDate;
+        day.lunch_id = $scope.lunch_id;
+        if (dayId == undefined){
+            console.log("going to insert a day");
+            $http.post("/day", day).then(function(response){
+                console.log("day saved", response);
+                getDays();
+            });
+        } else {
+            day.id = dayId;
+            $http.put("/day", day).then(function(response){
+                console.log("day updated", response);
+                getDays();
+            });
+        };
+    };
+    $scope.grabDinner = function(mealDate, dayId){
+        console.log("I am going to try and stick a dinner into this date", mealDate, "with id", $scope.dinner_id, "day id", dayId);
+        var day = {};
+        day.meal_date = mealDate;
+        day.dinner_id = $scope.dinner_id;
+        if (dayId == undefined){
+            console.log("going to insert a day");
+            $http.post("/day", day).then(function(response){
+                console.log("day saved", response);
+                getDays();
+            });
+        } else {
+            day.id = dayId;
+            $http.put("/day", day).then(function(response){
+                console.log("day updated", response);
+                getDays();
+            });
+        };
+    };
+
+
+    function getDays(){
+        $scope.arrWeek = [];
+        // TODO loop through days, add a date to each meal WITHOUT messing up weekstart.
+        var mealDate = $scope.weekStart.toDateString();
+        var workDate = new Date(mealDate);
+        for (var i=0; i<7; i++){
+            workDate.setDate(workDate.getDate() + 1);
+
+
+            var day = {};
+            day.meal_date = workDate.toDateString();
+
+            $scope.arrWeek.push(day);
+        };
+        var start = mealDate;
+        var end = $scope.arrWeek[6].meal_date;
+
+        // get days from database that match. Update array accordingly.
+        //-------------------------------
+        $http.get("/day/" + start + "/" + end ).then(function(response){
+            console.log("got some days", response.data);
+            //loop through response.data and put each one into scoped variable to
+            // feed select dropdowns
+
+
+
+            response.data.forEach(function(day){
+                    // taskArray.push(task);
+                    console.log("day = ", day);
+
+                    // stick a day into the array
+                    
+                    //console.log(meal);
+            });
+
+        });
+
+
+
+
+        //-----------------------------
+
+    };
+    $scope.prevWeek = function(){
+        $scope.weekStart.setDate($scope.weekStart.getDate() - 7);
+        getDays();
+    };
+
+    $scope.nextWeek = function(){
+        $scope.weekStart.setDate($scope.weekStart.getDate() + 7);
+        getDays();
+    };
+
+
+
 
     $scope.newMeal= function(mealType){
         $scope.meal = {};
@@ -93,17 +200,18 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
 
             });
-        } ;
+        };
 
     };
     $scope.editMeal = function(mealId){
         $scope.meal = {};
 
+
         console.log("going to edit meal with id:", mealId);
         for (var i= 0; i<arrMeals.length; i++){
             // console.log("checking meal", arrMeals[i]);
             if (arrMeals[i].id == parseInt(mealId)){
-                console.log("got match");
+                // console.log("got match");
                 $scope.meal.id = mealId;
                 $scope.meal.label = arrMeals[i].fld_meal_label;
                 $scope.meal.dishes = arrMeals[i].fld_meal_dishes;
@@ -111,12 +219,25 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 $scope.meal.instructions = arrMeals[i].fld_meal_instructions;
                 $scope.mealType= arrMeals[i].fld_meal_type;
 
+                // set scope selected breakfast, lunch, dinner
+                if (arrMeals[i].fld_meal_type == "breakfast"){
+                    $scope.breakfast_id = arrMeals[i].id;
+                };
+                if (arrMeals[i].fld_meal_type == "lunch"){
+                    $scope.lunch_id = arrMeals[i].id;
 
-            }
-        }
+                };
+                if (arrMeals[i].fld_meal_type == "dinner"){
+                    $scope.dinner_id = arrMeals[i].id;
+
+                };
+
+
+            };
+        };
         $scope.showMealForm = true;
 
-    }
+    };
 
     $scope.saveMeal = function(meal){
         console.log("fixing to save meal", meal);
@@ -139,10 +260,10 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 $scope.showMealForm = false;
                 getMeals();
             });
-        }
+        };
 
 
-    }
+    };
 
     function getMeals(){
         //    //     // make a get call to the database to populate meal dropdowns
@@ -185,7 +306,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             result =  (myDate.getDate()+1) +  arrMonths[myDate.getMonth()] + myDate.getFullYear();
         } else {
             result = '';
-        }
+        };
         return result;
     };
 
