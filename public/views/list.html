@@ -1,11 +1,7 @@
-
-<div>todo
-    enable disable grab meal buttons if meal is selected.
-    Select joined tables with joined fields as alias? to populate days with meal label.
-    Add cook select dropdowns to day display, figure out how to make "selected" option equal that stored in database.
-    Make elegant way for get days to populate week array without having to loop through 50 times.``
+<p>Shopping List</p>
+<div ng-repeat="day  in arrDays" class = "week-day">
+    <p>Date:{{day.meal_date}}</p>
+    <p>Breakfast:{{day.breakfast_label}}</p>
+    <p>Lunch:{{day.lunch_label}}</p>
+    <p>Dinner:{{day.dinner_label}}</p>
 </div>
-<p>
-    lists go here
-
-</p>

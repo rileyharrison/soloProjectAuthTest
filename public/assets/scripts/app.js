@@ -33,6 +33,12 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     $scope.arrLunches = [];
     $scope.arrDinners = [];
     var arrMeals = [];
+    $scope.arrCooks = [];
+    $scope.arrCooks.push({cook_label: "Select Cook", cook_id: "0"});
+
+    $scope.arrCooks.push({cook_label: "Vanessa", cook_id: "1"});
+    $scope.arrCooks.push({cook_label: "Riley", cook_id: "2"});
+
 
     // days variables
     //$scope.weekStart = now;
@@ -52,6 +58,45 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     getDays();
     getMeals();
 
+    $scope.newList = function(){
+        console.log("making a new shopping list");
+    }
+
+    $scope.setBreakfastCook = function(cookId, dayId){
+        console.log("trying to set breakfast cook id cook id day id", cookId, dayId);
+        var day = {};
+        day.breakfast_cook_id = cookId;
+        day.id = dayId;
+        $http.put("/day", day).then(function(response){
+            console.log("day updated", response);
+            getDays();
+        });
+
+    };
+    $scope.setLunchCook = function(cookId, dayId){
+        console.log("trying to set lunch cook id cook id day id", cookId, dayId);
+        var day = {};
+        day.lunch_cook_id = cookId;
+        day.id = dayId;
+        $http.put("/day", day).then(function(response){
+            console.log("day updated", response);
+            getDays();
+        });
+
+    };
+
+    $scope.setDinnerCook = function(cookId, dayId){
+        console.log("trying to set dinner cook id cook id day id", cookId, dayId);
+        var day = {};
+        day.dinner_cook_id = cookId;
+        day.id = dayId;
+        $http.put("/day", day).then(function(response){
+            console.log("day updated", response);
+            getDays();
+        });
+
+    };
+
     $scope.grabBreakfast = function(mealDate, dayId){
         console.log("I am going to try and stick a breakfast into this date", mealDate, "with meal id", $scope.breakfast_id, "day id", dayId);
         var day = {};
@@ -64,6 +109,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 getDays();
             });
         } else {
+            console.log("hey lets UPDATE a BREAKFST");
             day.id = dayId;
             $http.put("/day", day).then(function(response){
                 console.log("day updated", response);
@@ -110,50 +156,64 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         };
     };
 
-
     function getDays(){
         $scope.arrWeek = [];
-        // TODO loop through days, add a date to each meal WITHOUT messing up weekstart.
-        var mealDate = $scope.weekStart.toDateString();
-        var workDate = new Date(mealDate);
+        $scope.arrDays = [];
+        // days hold results
+        // arrweek holds 7 days
+        var start = $scope.weekStart.toDateString();
+        var end = new Date(start);
+        end.setDate(end.getDate()+6);
+        end = end.toDateString();
+
+        //  fill up days
+        var workDate = new Date(start);
         for (var i=0; i<7; i++){
-            workDate.setDate(workDate.getDate() + 1);
-
-
             var day = {};
             day.meal_date = workDate.toDateString();
+            day.breakfast_cook_id = "0";
+            day.lunch_cook_id = "0";
+            day.dinner_cook_id = "0";
 
             $scope.arrWeek.push(day);
-        };
-        var start = mealDate;
-        var end = $scope.arrWeek[6].meal_date;
+            workDate.setDate(workDate.getDate() + 1);
 
-        // get days from database that match. Update array accordingly.
-        //-------------------------------
+        };
+
+        console.log("get days range", start, end);
         $http.get("/day/" + start + "/" + end ).then(function(response){
             console.log("got some days", response.data);
             //loop through response.data and put each one into scoped variable to
             // feed select dropdowns
-
-
-
             response.data.forEach(function(day){
-                    // taskArray.push(task);
-                    console.log("day = ", day);
+                // var myDay = new Date(day.meal_date);
+                // day.meal_date = myDay.toDateString();
+                // console.log("day=", new Date(myFormatDate(day.meal_date)).toDateString());
+                day.meal_date = new Date(myFormatDate(day.meal_date)).toDateString();
+                console.log("day=", day);
+                $scope.arrDays.push(day);
 
-                    // stick a day into the array
-
-                    //console.log(meal);
             });
+
+            // after get successful
+            for (a=0;a<$scope.arrWeek.length; a++){
+                for (b=0;b<$scope.arrDays.length; b++){
+                    if ($scope.arrWeek[a].meal_date == $scope.arrDays[b].meal_date){
+                        console.log("match data!!!", $scope.arrWeek[a]);
+                        $scope.arrWeek[a]=$scope.arrDays[b];
+                    };
+                };
+            };
+            for (a=0;a<$scope.arrWeek.length; a++){
+                console.log("days in arrWeek after matching", $scope.arrWeek[a]);
+            };
 
         });
 
-
-
-
-        //-----------------------------
-
     };
+
+
+
     $scope.prevWeek = function(){
         $scope.weekStart.setDate($scope.weekStart.getDate() - 7);
         getDays();
@@ -271,6 +331,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 getMeals();
             });
         } else {
+            console.log("Hey! I am going to  update a meal!!");
             meal.id = $scope.meal.id;
             $http.put("/meal", meal).then(function(response){
                 console.log("meal updated", response);
@@ -311,6 +372,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             });
 
         });
+        getDays();
 
     };
 

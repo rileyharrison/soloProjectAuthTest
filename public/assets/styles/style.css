@@ -1,3 +1,67 @@
+xdiv {
+    border-radius: 5px;
+    margin: 5px;
+     border: 1px solid black;
+     line-height: 80%;
+     padding: 2px;
+     background-color: #ffffff;
+
+}
+.week-day{
+    line-height: 60%;
+    padding: 2px;
+    border-radius: 5px;
+    margin: 5px;
+     border: 1px solid black;
+     background-color: #ffffff;
+
+}
+.day-line{
+
+
+}
+.grab-meal{
+    float: right;
+}
+.meal-box-col{
+    width: 400px;
+    background-color: purple;
+
+}
+.meal-edit-col{
+    width: 300px;
+
+}
+.breakfasts{
+    width: 200px;
+
+}
+.lunches{
+    width: 200px;
+
+
+}
+.dinners{
+    width: 200px;
+
+
+}
+.list-container{
+    background-color: red;
+
+}
+.week-container{
+    background-color: green;
+
+}
+.meal-container{
+    background-color: blue;
+
+}
+.planner{
+    background-color: salmon;
+}
+
 .grab-meal:disabled {
     color: #AAAAAA;
 }
@@ -6,21 +70,26 @@
 .list-container{
     width: 25%;
     float:left;
+    display: inline-block;
+
 
 }
 .week-container{
-    width: 25%;
+    width: 40%;
     display: inline-block;
 
+
+}
+.meal-container{
+    width: 30%;
+    float:right;
+    display: inline-block;
 
 }
 .week-day{
     border: 1px solid black;
 }
-.meal-container{
-    width: 50%;
-    float:right;
-}
+
 .meal-box-col{
     width: 25%;
     float: left;

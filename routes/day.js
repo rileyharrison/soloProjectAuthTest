@@ -46,19 +46,19 @@ router.post("/*", function(req,res){
 });
 
 router.put("/*", function(req,res){
-
-    // update to save edited meal
-    var meal_type = req.body.mealType;
-    var meal_label = req.body.label;
-    var meal_dishes = req.body.dishes;
-    var meal_ingredients = req.body.ingredients;
-    var meal_instructions = req.body.instructions;
-    var meal_id = req.body.id;
+    console.log("in server DAY.js, updating edited DAY:",req.body);
+    var id = req.body.id;
+    var breakfast_id = req.body.breakfast_id;
+    var lunch_id = req.body.lunch_id;
+    var dinner_id = req.body.dinner_id;
+    var breakfast_cook_id = req.body.breakfast_cook_id;
+    var lunch_cook_id = req.body.lunch_cook_id;
+    var dinner_cook_id = req.body.dinner_cook_id;
+    var in_list = req.body.in_list;
 
     var strSql = '';
     var arrFields =[];
 
-    console.log("in server meal.js, updating edited meal:",req.body);
     pg.connect(connectionString, function(err, client, done){
         if (err){
           console.log('error connecting to DB:', err);
@@ -67,17 +67,44 @@ router.put("/*", function(req,res){
           return;
     }
 
-    strSql = "UPDATE tbl_meals SET fld_meal_type = '" + meal_type + "', fld_meal_label ='" + meal_label + "', fld_meal_dishes='" + meal_dishes + "',";
-    strSql += " fld_meal_ingredients='" + meal_ingredients + "', fld_meal_instructions='" + meal_instructions + "' WHERE id = '" + meal_id + "';";
-    var query = client.query(strSql);
+    strSql = "UPDATE tbl_days SET ";
+
+    if (breakfast_id){
+        strSql += " breakfast_id = '" + breakfast_id + "' "
+    };
+    if (lunch_id){
+        strSql += " lunch_id = '" + lunch_id + "' "
+    };
+    if (dinner_id){
+        strSql += " dinner_id = '" + dinner_id + "'"
+    };
+    if (breakfast_cook_id){
+        strSql += " breakfast_cook_id = '" + breakfast_cook_id + "' "
+    };
+    if (lunch_cook_id){
+        strSql += " lunch_cook_id = '" + lunch_cook_id + "' "
+    };
+    if (dinner_cook_id){
+        strSql += " dinner_cook_id = '" + dinner_cook_id + "' "
+    };
+    if (in_list){
+        strSql += " in_list = '" + in_list + "' "
+    };
+
+
+
+
+    strSql += " WHERE id = '" + id + "';";
     console.log("strSql = ", strSql);
+
+    var query = client.query(strSql);
     query.on('end', function(){
       res.status(200).send("successful UPDATE");
       done();
     });
 
     query.on('error', function(error){
-      console.log("error updating meal in  DB:", error);
+      console.log("error updating DAY in  DB:", error);
       res.status(500).send(error);
       done();
     });
@@ -88,11 +115,8 @@ router.get("/:start/:end", function(req,res){
 
   var start_date = req.params.start;
   var end_date = req.params.end;
+  var strSql = "";
   console.log("hey you will get some days from ", start_date, "to", end_date);
-
-
-
-
 
   pg.connect(connectionString, function(err, client, done){
     if (err){
@@ -102,10 +126,28 @@ router.get("/:start/:end", function(req,res){
       return;
     }
     var results=[];
-    var query = client.query("SELECT tbl_days.* FROM tbl_days WHERE meal_date >= '" + start_date + "' AND meal_date <= '" + end_date + "';");
+    strSql = "SELECT tbl_days.id, meal_date, breakfast_id, lunch_id, dinner_id, breakfast_cook_id, lunch_cook_id, "
+    strSql += "dinner_cook_id, in_list,  breakfast.fld_meal_label AS breakfast_label, lunch.fld_meal_label AS lunch_label, ";
+    strSql += "dinner.fld_meal_label AS dinner_label FROM tbl_days "
+    strSql += "LEFT JOIN tbl_meals as breakfast ON tbl_days.breakfast_id = breakfast.id ";
+    strSql += "LEFT JOIN tbl_meals as lunch ON tbl_days.lunch_id = lunch.id ";
+    strSql += "LEFT JOIN tbl_meals as dinner ON tbl_days.dinner_id = dinner.id ";
+
+//     SELECT animal.ID, breed1.BreedName as BreedName1, breed2.BreadName as BreadName2
+// FROM animal
+//    LEFT JOIN breed as breed1 ON animal.breedID=breed1.ID
+//    LEFT JOIN breed as breed2 ON animal.breedID=breed2.ID
+// WHERE animal.ID='7';
+    strSql += "WHERE meal_date >= '" + start_date + "' AND meal_date <= '" + end_date + "';";
+
+    console.log("strSql=" , strSql);
+
+    var query = client.query(strSql);
+    // var query = client.query("SELECT tbl_days.*  FROM tbl_days WHERE meal_date >= '" + start_date + "' AND meal_date <= '" + end_date + "';");
     query.on('row', function(row){
 
       results.push(row);
+    //   console.log("row=", row);
     });
     query.on('end', function(){
       res.send(results);
