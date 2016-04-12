@@ -2,14 +2,14 @@
 
         <div class = "breakfasts">
             <button ng-click="newMeal('breakfast')">New Breakfast </button>
-            <select size = "12" name = "breakfast" ng-model="breakfast.id" ng-click="editMeal(breakfast.id, 'breakfast')">
+            <select size = "12" name = "breakfast" ng-model="breakfast.id" ng-change="editMeal(breakfast.id, 'breakfast')">
                 <option value = "" >Clear</option>
                 <option ng-repeat="meal in arrBreakfasts" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
             </select>
         </div>
         <div class = "lunches">
             <button ng-click="newMeal('lunch')">New Lunch </button>
-            <select size = "12" name = "lunch"ng-model="lunch.id" ng-click="editMeal(lunch.id,'lunch')">
+            <select size = "12" name = "lunch"ng-model="lunch.id" ng-change="editMeal(lunch.id,'lunch')">
                 <option value = "" >Clear</option>
                 <option ng-repeat="meal in arrLunches" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
             </select>
@@ -18,7 +18,7 @@
         <div class = "dinners">
             <button ng-click="newMeal('dinner')">New Dinner </button>
 
-        <select size = "12" name = "dinner" ng-model="dinner.id" ng-click="editMeal(dinner.id,'dinner')">
+        <select size = "12" name = "dinner" ng-model="dinner.id" ng-change="editMeal(dinner.id,'dinner')">
             <option value = "" >Clear</option>
             <option ng-repeat="meal in arrDinners" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
         </select>
@@ -26,13 +26,36 @@
 </div>
 
 
-<div class = "meal-edit-col">
-    <div ng-show="showMealForm">
+<div class = "meal-edit-col" ng-show="showMealForm">
+
 
         <form novalidate class="meal-form" name = "frmMeal">
+            <p>Label</p>
             <input name = "label" ng-model="meal.label" type = "text" placeholder="enter description"  />
+            <p>Dishes</p>
             <textarea name = "dishes" ng-model = "meal.dishes"></textarea>
+            <p>Ingredients</p>
             <textarea name = "ingredients" ng-model = "meal.ingredients"></textarea>
+
+            <p>Amount</p>
+            <input  name = "food.amount" ng-model = "food.amount" type = "text" name = "amount" placeholder="amount" />
+            <p>Unit</p>
+            <input  name = "food.unit" ng-model = "food.unit" type = "text" name = "unit" placeholder="unit" />
+            <p>Food</p>
+            <input name = "food.label" ng-model = "food.label" type = "text" name = "food" placeholder="food" />
+            <button ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
+            <p>Foods</p>
+            <table class = "food-list">
+                <tr><td>amt     </td><td>unit     </td><td>food     </td></tr>
+            <tr ng-repeat = "ingredient in arrFoods">
+                <td>{{ingredient.amount}}</td>
+                <td>{{ingredient.unit}}</td>
+                <td>{{ingredient.label}}</td>
+            </tr>
+
+            </table>
+
+            <p>Instructions</p>
             <textarea name = "instructions" ng-model = "meal.instructions"></textarea>
 
 
@@ -45,6 +68,6 @@
         </form>
 
 
-    </div>
+
 
 </div>

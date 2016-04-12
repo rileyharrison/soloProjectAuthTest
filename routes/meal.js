@@ -14,6 +14,8 @@ router.post("/*", function(req,res){
     var meal_dishes = req.body.dishes;
     var meal_ingredients = req.body.ingredients;
     var meal_instructions = req.body.instructions;
+    var arr_foods = req.body.foods;
+    console.log("arr_foods = ", arr_foods);
 
     var strSql = '';
     var arrFields =[];
@@ -28,12 +30,50 @@ router.post("/*", function(req,res){
     }
 
     strSql = 'INSERT INTO tbl_meals ("fld_meal_type", "fld_meal_label", "fld_meal_dishes","fld_meal_ingredients", "fld_meal_instructions") '
-    strSql += 'VALUES ($1,$2,$3,$4,$5);';
+    strSql += 'VALUES ($1,$2,$3,$4,$5) RETURNING id;';
     arrFields = [meal_type, meal_label, meal_dishes, meal_ingredients, meal_instructions];
     var query = client.query(strSql,arrFields);
+
     console.log("strSql = ", strSql);
     console.log("arrFields = ", arrFields);
+
+    var mealId;
+
+    query.on('row', function(row){
+        console.log("got a row back hopefuly id", row);
+
+        mealId = row.id;
+        strSql = "INSERT INTO tbl_ingredients (fld_meal_id, fld_amount, fld_unit, fld_label) VALUES ";
+
+        for (var i=0; i<arr_foods.length; i++){
+            strSql += "  ('" + mealId + "','" + arr_foods[i].amount + "','"+ arr_foods[i].unit + "','" + arr_foods[i].label + "')";
+            if (i<arr_foods.length-1){
+                strSql += ",";
+            } else {
+                strSql += ";";
+            }
+        };
+
+        console.log("goint to insert ingredients", strSql);
+        var query = client.query(strSql);
+        query.on('end', function(){
+
+        
+          done();
+        });
+
+        query.on('error', function(error){
+          console.log("error inserting ingredients into DB:", error);
+          res.status(500).send(error);
+          done();
+        });
+
+
+    });
+
+
     query.on('end', function(){
+
       res.status(200).send("successful insert");
       done();
     });

@@ -7,6 +7,43 @@ xdiv {
      background-color: #ffffff;
 
 }
+.food-list{
+    background-color: #ffffff;
+}
+.list-container{
+    width: 20%;
+    float:left;
+    display: inline-block;
+    background-color: red;
+
+
+
+}
+.week-container{
+    width: 30%;
+    display: inline-block;
+    background-color: green;
+
+
+
+}
+.meal-container{
+    width: 30%;
+    display: inline-block;
+    background-color: blue;
+
+
+}
+.shopping-list{
+    border-radius: 5px;
+    margin: 5px;
+     border: 1px solid black;
+     line-height: 80%;
+     padding: 2px;
+     background-color: #ffffff;
+
+
+}
 .week-day{
     line-height: 60%;
     padding: 2px;
@@ -24,12 +61,18 @@ xdiv {
     float: right;
 }
 .meal-box-col{
-    width: 400px;
+    display: inline-block;
+    width: 20%;
     background-color: purple;
+    float: left;
 
 }
 .meal-edit-col{
-    width: 300px;
+    display: inline-block;
+    width: 20%;
+    background-color: salmon;
+    float: right;
+
 
 }
 .breakfasts{
@@ -46,20 +89,10 @@ xdiv {
 
 
 }
-.list-container{
-    background-color: red;
 
-}
-.week-container{
-    background-color: green;
 
-}
-.meal-container{
-    background-color: blue;
-
-}
 .planner{
-    background-color: salmon;
+    background-color: grey;
 }
 
 .grab-meal:disabled {
@@ -67,25 +100,7 @@ xdiv {
 }
 
 
-.list-container{
-    width: 25%;
-    float:left;
-    display: inline-block;
 
-
-}
-.week-container{
-    width: 40%;
-    display: inline-block;
-
-
-}
-.meal-container{
-    width: 30%;
-    float:right;
-    display: inline-block;
-
-}
 .week-day{
     border: 1px solid black;
 }

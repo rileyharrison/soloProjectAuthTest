@@ -1,7 +1,16 @@
 <p>Shopping List</p>
-<div ng-repeat="day  in arrDays" class = "week-day">
-    <p>Date:{{day.meal_date}}</p>
-    <p>Breakfast:{{day.breakfast_label}}</p>
-    <p>Lunch:{{day.lunch_label}}</p>
-    <p>Dinner:{{day.dinner_label}}</p>
+<div class = "shopping-list">
+
+
+    <div ng-repeat="list_day  in arrList" class = "list-day">
+        <p>Date:  {{list_day.meal_date}}</p>
+        <p ng-show = "list_day.breakfast_label">Breakfast:  {{list_day.breakfast_label}}</p>
+        <p ng-show = "list_day.lunch_label">Lunch:  {{list_day.lunch_label}}</p>
+        <p ng-show = "list_day.dinner_label">Dinner:  {{list_day.dinner_label}}</p>
+    </div>
+    <div ng-repeat="ingredients  in arrIngredients" class = "list-ingredients">
+        <p>{{ingredients.food}}</p>
+
+    </div>
+
 </div>

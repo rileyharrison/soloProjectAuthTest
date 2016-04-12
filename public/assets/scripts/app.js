@@ -32,6 +32,8 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     $scope.arrBreakfasts = [];
     $scope.arrLunches = [];
     $scope.arrDinners = [];
+
+    $scope.arrList = [];
     var arrMeals = [];
     $scope.arrCooks = [];
     $scope.arrCooks.push({cook_label: "Select Cook", cook_id: "0"});
@@ -39,28 +41,76 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     $scope.arrCooks.push({cook_label: "Vanessa", cook_id: "1"});
     $scope.arrCooks.push({cook_label: "Riley", cook_id: "2"});
 
+    var arrIngredients = [];
+
+    $scope.arrFoods = [];
+
 
     // days variables
     //$scope.weekStart = now;
     if ($scope.weekStart == undefined){
         $scope.weekStart = new Date();
     }
-    $scope.test = 5;
     console.log("scope.weekStart=", $scope.weekStart);
 
-
-
-
-
-
-
-
-    getDays();
+    // getDays();
     getMeals();
+    getIngredients();
+    // getList();
+    $scope.addFood = function(amount, unit, label){
 
-    $scope.newList = function(){
-        console.log("making a new shopping list");
-    }
+        console.log("goint to add amount unit label", amount, unit, label);
+        var food = {"amount": amount, "unit": unit, "label":label};
+        $scope.arrFoods.push(food);
+        $scope.food = {};
+
+
+
+
+    };
+
+    function getIngredients(){
+        arrIngredients = [];
+
+
+
+        console.log("get ingredients");
+        $http.get("/food").then(function(response){
+
+            console.log("got ingredients", response.data);
+            //loop through response.data and put each one into scoped variable to
+
+            response.data.forEach(function(food_block){
+
+                console.log("food block=", food_block);
+                arrIngredients.push(food_block);
+
+            });
+
+        });
+    };
+
+    function getList(){
+        $scope.arrList = [];
+
+
+
+        console.log("get list");
+        $http.get("/list").then(function(response){
+
+            console.log("got days for list", response.data);
+            //loop through response.data and put each one into scoped variable to
+
+            response.data.forEach(function(list_day){
+
+                list_day.meal_date = new Date(myFormatDate(list_day.meal_date)).toDateString();
+                console.log("list day=", list_day);
+                $scope.arrList.push(list_day);
+
+            });
+
+        });
+    };
 
     $scope.setBreakfastCook = function(cookId, dayId){
         console.log("trying to set breakfast cook id cook id day id", cookId, dayId);
@@ -117,6 +167,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             });
         };
     };
+
     $scope.grabLunch = function(mealDate, dayId){
         console.log("I am going to try and stick a lunch into this date", mealDate, "with id", $scope.lunch_id, "day id", dayId);
         var day = {};
@@ -209,6 +260,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             };
 
         });
+        getList();
 
     };
 
@@ -229,6 +281,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
     $scope.newMeal= function(mealType){
         $scope.meal = {};
+        $scope.food = {};
         $scope.showMealForm = true;
         $scope.mealType = mealType;
         console.log("we are going to make a new meal", mealType);
@@ -267,8 +320,10 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         console.log("Clear breakfast ID");
         $scope.breakfast_id="";
     };
+
     $scope.editMeal = function(mealId, mealType){
         $scope.meal = {};
+        $scope.arrFoods =[];
         console.log("should we clear", mealType);
         console.log("mealid length", mealId.length);
         if (mealId.length == 0){
@@ -285,10 +340,22 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
 
         console.log("going to edit meal with id:", mealId);
+
         for (var i= 0; i<arrMeals.length; i++){
             // console.log("checking meal", arrMeals[i]);
             if (arrMeals[i].id == parseInt(mealId)){
+
+                // TODO populate ingredients for this meal
                 // console.log("got match");
+                for (var a=0; a<arrIngredients.length; a++){
+                    var foodRow = arrIngredients[a];
+                    if (foodRow.fld_meal_id == parseInt(mealId)){
+
+                        var food = {"amount": foodRow.fld_amount, "unit": foodRow.fld_unit, "label":foodRow.fld_label};
+
+                        $scope.arrFoods.push(food);
+                    }
+                }
                 $scope.meal.id = mealId;
                 $scope.meal.label = arrMeals[i].fld_meal_label;
                 $scope.meal.dishes = arrMeals[i].fld_meal_dishes;
@@ -322,6 +389,8 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         console.log("meal id=", $scope.meal.id);
 
         meal.mealType = $scope.mealType;
+        meal.foods = $scope.arrFoods;
+        $scope.arrFoods = [];
 
         if ($scope.meal.id == undefined){
             console.log("going to insert");
@@ -372,7 +441,9 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             });
 
         });
+        // getIngredients();
         getDays();
+
 
     };
 
