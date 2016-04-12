@@ -13,7 +13,7 @@
 <button ng-click = "prevWeek()">Prev</button>
 
 <div ng-repeat="day  in arrWeek" class = "week-day">
-    <p>Date:{{day.meal_date}}</p>
+    <p>Date:{{day.meal_date}}<button ng-click = "listDay(day.id)" ng-show = "!day.in_list && day.id ">list</button></p>
     <div class = "day-line" >
         <select ng-model="day.breakfast_cook_id" name = "breakfast_cook"  ng-change = "setBreakfastCook(day.breakfast_cook_id, day.id)" ng-disabled = "!day.breakfast_id">
 

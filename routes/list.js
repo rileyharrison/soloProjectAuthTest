@@ -20,9 +20,7 @@ router.get("/*", function(req,res){
     var results=[];
     strSql = "SELECT tbl_days.id, meal_date, breakfast_id, lunch_id, dinner_id, breakfast_cook_id, lunch_cook_id, "
     strSql += "dinner_cook_id, in_list,  breakfast.fld_meal_label AS breakfast_label, lunch.fld_meal_label AS lunch_label, ";
-    strSql += "dinner.fld_meal_label AS dinner_label, breakfast.fld_meal_ingredients AS breakfast_ingredients,"
-    strSql += "lunch.fld_meal_ingredients AS lunch_ingredients,"
-    strSql += "dinner.fld_meal_ingredients AS dinner_ingredients"
+    strSql += "dinner.fld_meal_label AS dinner_label "
 
     strSql +=" FROM tbl_days "
     strSql += "LEFT JOIN tbl_meals as breakfast ON tbl_days.breakfast_id = breakfast.id ";
@@ -52,6 +50,44 @@ router.get("/*", function(req,res){
 
   });
 });
+});
+
+router.put("/*", function(req,res){
+    console.log("in LIST.js, updating edited DAY:",req.body);
+    var id = req.body.id;
+    var action = req.body.action;
+    var strSql = '';
+
+    if (action =="unlist"){
+        strSql = "UPDATE tbl_days SET in_list = 'FALSE' WHERE id = '" + id + "';";
+    };
+    if (action =="list"){
+        strSql = "UPDATE tbl_days SET in_list = 'TRUE' WHERE id = '" + id + "';";
+    };
+    console.log("strSql = ", strSql);
+
+    pg.connect(connectionString, function(err, client, done){
+        if (err){
+          console.log('error connecting to DB:', err);
+          res.status(500).send(err);
+          done();
+          return;
+    }
+
+
+    var query = client.query(strSql);
+
+    query.on('end', function(){
+      res.status(200).send("successful UPDATE");
+      done();
+    });
+
+    query.on('error', function(error){
+      console.log("error updating DAY in  DB:", error);
+      res.status(500).send(error);
+      done();
+    });
+    });
 });
 
 module.exports = router;

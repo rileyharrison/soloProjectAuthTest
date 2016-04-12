@@ -15,7 +15,7 @@ router.get("/*", function(req,res){
       return;
     }
     var results=[];
-    var query = client.query('SELECT tbl_ingredients.* FROM tbl_ingredients ;');
+    var query = client.query('SELECT tbl_ingredients.* FROM tbl_ingredients  ORDER BY fld_label ;');
     query.on('row', function(row){
       results.push(row);
     });

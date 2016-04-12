@@ -58,7 +58,7 @@ router.post("/*", function(req,res){
         var query = client.query(strSql);
         query.on('end', function(){
 
-        
+
           done();
         });
 
@@ -95,6 +95,8 @@ router.put("/*", function(req,res){
     var meal_ingredients = req.body.ingredients;
     var meal_instructions = req.body.instructions;
     var meal_id = req.body.id;
+    var arr_foods = req.body.foods;
+    console.log("arr_foods = ", arr_foods);
 
     var strSql = '';
     var arrFields =[];
@@ -108,10 +110,31 @@ router.put("/*", function(req,res){
           return;
     }
 
+
     strSql = "UPDATE tbl_meals SET fld_meal_type = '" + meal_type + "', fld_meal_label ='" + meal_label + "', fld_meal_dishes='" + meal_dishes + "',";
     strSql += " fld_meal_ingredients='" + meal_ingredients + "', fld_meal_instructions='" + meal_instructions + "' WHERE id = '" + meal_id + "';";
+    strSql += " DELETE FROM tbl_ingredients WHERE fld_meal_id = '"+ meal_id +"'; "
+    // add in sql for insert ingredients
+
+    strSql += "INSERT INTO tbl_ingredients (fld_meal_id, fld_amount, fld_unit, fld_label) VALUES ";
+
+    for (var i=0; i<arr_foods.length; i++){
+        strSql += "  ('" + meal_id + "','" + arr_foods[i].amount + "','"+ arr_foods[i].unit + "','" + arr_foods[i].label + "')";
+        if (i<arr_foods.length-1){
+            strSql += ",";
+        } else {
+            strSql += ";";
+        }
+    };
+
+
+
+
+    console.log("UPDATE MEAL ************ strSql = ", strSql);
+
+
     var query = client.query(strSql);
-    console.log("strSql = ", strSql);
+
     query.on('end', function(){
       res.status(200).send("successful UPDATE");
       done();
