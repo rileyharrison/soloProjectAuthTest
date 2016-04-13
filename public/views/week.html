@@ -10,9 +10,9 @@
 // get dates populates one week array of objects. Store id if is one, empty if not.
 // This is how we can check if exists for update or insert.
 -->
-<button ng-click = "prevWeek()">Prev</button>
+<button ng-click = "prevWeek()" class = "week-nav">Prev</button>
 
-<div ng-class="{ 'day-unlisted': !day.in_list && day.id  }" ng-repeat="day  in arrWeek" class = "week-day">
+<div ng-class="{ 'day-unlisted': !day.in_list   }" ng-repeat="day  in arrWeek" class = "week-day">
     <p>{{day.meal_date}}<button ng-click = "listDay(day.id)" ng-show = "!day.in_list && day.id ">list</button></p>
     <div class = "day-line"  >
         <select ng-model="day.breakfast_cook_id" name = "breakfast_cook"  ng-change = "setBreakfastCook(day.breakfast_cook_id, day.id)" ng-disabled = "!day.breakfast_id">
@@ -45,4 +45,4 @@
         <button class = "grab-meal" ng-click = "grabDinner(day.meal_date, day.id)" ng-disabled = "!dinner_id">+ Dinner</button>
     </div>
 </div>
-<button ng-click = "nextWeek()">Next</button>
+<button ng-click = "nextWeek()" class = "week-nav">Next</button>

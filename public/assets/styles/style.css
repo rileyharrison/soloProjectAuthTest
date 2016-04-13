@@ -1,16 +1,19 @@
-xdiv {
-    border-radius: 5px;
-    margin: 5px;
-     border: 1px solid black;
-     line-height: 80%;
-     padding: 2px;
-     background-color: #ffffff;
 
-}
 body{
     font-family: Century Gothic, sans-serif;
     margin:0;
     padding:0;
+
+}
+.planner{
+    background-color: grey;
+    height: 100px;
+}
+
+.week-nav{
+    width: 98%;
+    margin-left: 1%;
+
 
 }
 
@@ -116,7 +119,7 @@ body{
     padding: 2px;
     border-radius: 5px;
     margin: 5px;
-     background-color:  #ffcccc;
+     background-color:  #e6f7ff;
      border-style: none;
 
 
@@ -153,9 +156,7 @@ body{
 }
 
 
-.planner{
-    background-color: grey;
-}
+
 
 .grab-meal:disabled {
     color: #AAAAAA;
