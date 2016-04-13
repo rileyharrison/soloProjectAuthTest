@@ -4,7 +4,7 @@
 
 
     <div ng-repeat="list_day  in arrList" class = "list-day">
-        <p>Date:  {{list_day.meal_date}}<button ng-click = "unlistDay(list_day.id)">Unlist</button></p>
+        <p>Date:  {{list_day.meal_date}}<button class = "unlist" ng-click = "unlistDay(list_day.id)">Unlist</button></p>
         <p ng-click="editMeal(list_day.breakfast_id,'breakfast')" ng-show = "list_day.breakfast_label">Breakfast:  {{list_day.breakfast_label}}</p>
         <p ng-click="editMeal(list_day.lunch_id,'lunch')" ng-show = "list_day.lunch_label">Lunch:  {{list_day.lunch_label}}</p>
         <p ng-click="editMeal(list_day.dinner_id,'dinner')" ng-show = "list_day.dinner_label">Dinner:  {{list_day.dinner_label}}</p>

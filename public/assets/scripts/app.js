@@ -479,6 +479,9 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         meal.mealType = $scope.mealType;
         meal.foods = $scope.arrFoods;
         $scope.arrFoods = [];
+        if (meal.instructions == undefined || meal.instructions == null){
+            meal.instructions = '';
+        };
 
         if ($scope.meal.id == undefined){
             console.log("going to insert");

@@ -4,7 +4,7 @@
         <form novalidate class="meal-form" name = "frmMeal">
             <div class = "edit-block">
 
-                <p class = "edit-label ">Label</p>
+                <p class = "edit-label ">Meal Description</p>
                 <input class = "edit-text" name = "label" ng-model="meal.label" type = "text" placeholder="enter description"  />
                 <p class = "edit-label ">Dishes</p>
                 <textarea class = "edit-text" name = "dishes" ng-model = "meal.dishes"></textarea>
@@ -21,7 +21,7 @@
                 <button ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
                 <p class = "edit-label ">Ingredients</p>
                 <table class = "food-list">
-                    <tr><td>amt     </td><td>unit     </td><td>food     </td><TD>nuke</TD></tr>
+                    <tr class = "table-header"><td>amt     </td><td>unit     </td><td>food     </td><TD>nuke</TD></tr>
                 <tr ng-repeat = "ingredient in arrFoods">
                     <td>{{ingredient.amount}}</td>
                     <td>{{ingredient.unit}}</td>
@@ -36,7 +36,7 @@
 
 
                 <p class = "edit-label ">Instructions</p>
-                <textarea class = "edit-text"  name = "instructions" ng-model = "meal.instructions"></textarea>
+                <textarea class = "edit-instructions"  name = "instructions" ng-model = "meal.instructions"></textarea>
             </div>
             <div class = "edit-block">
 
