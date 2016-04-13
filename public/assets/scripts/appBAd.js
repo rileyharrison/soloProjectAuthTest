@@ -33,9 +33,6 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     $scope.arrLunches = [];
     $scope.arrDinners = [];
 
-    $scope.showMealForm = false;
-
-
     $scope.arrList = [];
     var arrMeals = [];
     $scope.arrCooks = [];
@@ -43,11 +40,6 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
     $scope.arrCooks.push({cook_label: "Vanessa", cook_id: "1"});
     $scope.arrCooks.push({cook_label: "Riley", cook_id: "2"});
-    $scope.arrCooks.push({cook_label: "Sunny", cook_id: "3"});
-    $scope.arrCooks.push({cook_label: "Peri", cook_id: "4"});
-    $scope.arrCooks.push({cook_label: "Beck", cook_id: "5"});
-    $scope.arrCooks.push({cook_label: "Marley", cook_id: "6"});
-
 
     var arrIngredients = [];
 
@@ -64,21 +56,11 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     console.log("scope.weekStart=", $scope.weekStart);
 
     // getDays();
-    getIngredients();
+    // getIngredients();
     // getMeals();
 
     // getList();
     $scope.addFood = function(amount, unit, label){
-        if (amount == undefined){
-            amount = '';
-        };
-        if (unit == undefined){
-            unit = '';
-        };
-        if (label == undefined){
-            label = '';
-        };
-
 
         console.log("goint to add amount unit label", amount, unit, label);
         var food = {"amount": amount, "unit": unit, "label":label};
@@ -107,7 +89,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 arrIngredients.push(food_block);
 
             });
-            getMeals();
+            // getMeals();
 
 
         });
@@ -115,17 +97,41 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     function popShopFoods(){
         console.log("in PopSHop FOods, getting ready to step through arrIngredients which has length", arrIngredients.length);
 
+        // do it here?
+        console.log("did I fill the list", $scope.arrList.length);
         $scope.arrShoppingFood = [];
-        console.log("get list");
-        $http.get("/list/foods").then(function(response){
 
-            console.log("got days for list", response.data);
-            //loop through response.data and put each one into scoped variable to
-            response.data.forEach(function(foodRow){
-                console.log("w0000t! Food Row shopping-list!!!", foodRow);
-                $scope.arrShoppingFood.push(foodRow);
-            });
-        });
+            for (var a = 0; a<arrIngredients.length; a++){
+
+                console.log("HEy I am stepping through arrLIst", $scope.arrList[i]);
+                console.log("getting ready to step through arrIngredients which has length", arrIngredients.length);
+                    for (var i=0; i<$scope.arrList.length; i++){
+
+                // console.log("looping through INGREIDENTS the list", arrIngredients[a]);
+
+                // chec if any of the meals hold these ingredients
+                var listRow = $scope.arrList[i];
+                var ingredientRow = arrIngredients[a];
+                // console.log ("checking list items against ingredients for meal ids", listRow, ingredientRow);
+                if (listRow.breakfast_id == ingredientRow.fld_meal_id){
+                    console.log("Holy crap we have a food to put in the list", listRow,ingredientRow);
+                    var newFood = {"fld_amount":ingredientRow.fld_amount, "fld_unit": ingredientRow.fld_unit, "fld_label":ingredientRow.fld_label};
+                    $scope.arrShoppingFood.push(newFood);
+                };
+                if (listRow.lunch_id == ingredientRow.fld_meal_id){
+                    console.log("Holy crap we have a food to put in the list", listRow,ingredientRow);
+                    var newFood = {"fld_amount":ingredientRow.fld_amount, "fld_unit": ingredientRow.fld_unit, "fld_label":ingredientRow.fld_label};
+                    $scope.arrShoppingFood.push(newFood);
+                };
+                if (listRow.dinner_id == ingredientRow.fld_meal_id){
+                    console.log("Holy crap we have a food to put in the list", listRow,ingredientRow);
+                    var newFood = {"fld_amount":ingredientRow.fld_amount, "fld_unit": ingredientRow.fld_unit, "fld_label":ingredientRow.fld_label};
+                    $scope.arrShoppingFood.push(newFood);
+                };
+            };
+        };
+        // check arrShoppingFood
+
     };
 
     function getList(){
@@ -143,7 +149,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 console.log("list day=", list_day);
                 $scope.arrList.push(list_day);
             });
-            popShopFoods();
+            // popShopFoods();
 
         });
         // pop shopping list here?
@@ -156,7 +162,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         day.action = "unlist";
         $http.put("/list", day).then(function(response){
             console.log("day updated", response);
-            getDays();
+            // getDays();
         });
 
     };
@@ -169,7 +175,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         day.action = "list";
         $http.put("/list", day).then(function(response){
             console.log("day updated", response);
-            getDays();
+            // getDays();
         });
 
     };
@@ -181,7 +187,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         day.id = dayId;
         $http.put("/day", day).then(function(response){
             console.log("day updated", response);
-            getDays();
+            // getDays();
         });
 
     };
@@ -192,7 +198,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         day.id = dayId;
         $http.put("/day", day).then(function(response){
             console.log("day updated", response);
-            getDays();
+            // getDays();
         });
 
     };
@@ -204,7 +210,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         day.id = dayId;
         $http.put("/day", day).then(function(response){
             console.log("day updated", response);
-            getDays();
+            // getDays();
         });
 
     };
@@ -218,14 +224,14 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             console.log("going to insert a day");
             $http.post("/day", day).then(function(response){
                 console.log("day saved", response);
-                getDays();
+                // getDays();
             });
         } else {
             console.log("hey lets UPDATE a BREAKFST");
             day.id = dayId;
             $http.put("/day", day).then(function(response){
                 console.log("day updated", response);
-                getDays();
+                // getDays();
             });
         };
     };
@@ -239,13 +245,13 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             console.log("going to insert a day");
             $http.post("/day", day).then(function(response){
                 console.log("day saved", response);
-                getDays();
+                // getDays();
             });
         } else {
             day.id = dayId;
             $http.put("/day", day).then(function(response){
                 console.log("day updated", response);
-                getDays();
+                // getDays();
             });
         };
     };
@@ -258,13 +264,13 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             console.log("going to insert a day");
             $http.post("/day", day).then(function(response){
                 console.log("day saved", response);
-                getDays();
+                // getDays();
             });
         } else {
             day.id = dayId;
             $http.put("/day", day).then(function(response){
                 console.log("day updated", response);
-                getDays();
+                // getDays();
             });
         };
     };
@@ -320,7 +326,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             for (a=0;a<$scope.arrWeek.length; a++){
                 console.log("days in arrWeek after matching", $scope.arrWeek[a]);
             };
-            getList();
+            // getList();
 
 
         });
@@ -331,12 +337,12 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
     $scope.prevWeek = function(){
         $scope.weekStart.setDate($scope.weekStart.getDate() - 7);
-        getDays();
+        // getDays();
     };
 
     $scope.nextWeek = function(){
         $scope.weekStart.setDate($scope.weekStart.getDate() + 7);
-        getDays();
+        // getDays();
     };
 
 
@@ -373,7 +379,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                 $http.delete("/meal/" + nukeId).then(function(response){
                 // getVillains();
                 $scope.showMealForm = false;
-                getMeals();
+                // getMeals();
 
 
 
@@ -396,21 +402,6 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         $scope.meal = {};
         $scope.arrFoods =[];
         $scope.food = {};
-
-        // check if existing mealId = passed, if so, close form
-        // TODO
-
-
-        if ($scope.showMealForm ==false ){
-            $scope.showMealForm = true;
-            $scope.showMealFormId = mealId;
-        } else {
-            if ($scope.showMealFormId == mealId){
-                $scope.showMealForm = false;
-            };
-        };
-
-
 
 
         console.log("should we clear", mealType);
@@ -467,7 +458,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
             };
         };
-        // $scope.showMealForm = true;
+        $scope.showMealForm = true;
 
     };
 
@@ -485,7 +476,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             $http.post("/meal", meal).then(function(response){
                 console.log("meal saved", response);
                 $scope.showMealForm = false;
-                getIngredients();
+                // getIngredients();
 
             });
         } else {
@@ -494,7 +485,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             $http.put("/meal", meal).then(function(response){
                 console.log("meal updated", response);
                 $scope.showMealForm = false;
-                getIngredients();
+                // getIngredients();
             });
         };
 
@@ -529,7 +520,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
                     //console.log(meal);
             });
 
-            getDays();
+            // getDays();
         });
         // getIngredients();
 

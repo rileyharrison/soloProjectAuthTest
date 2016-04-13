@@ -1,0 +1,52 @@
+<div class = "meal-edit-col" ng-show="showMealForm">
+
+
+        <form novalidate class="meal-form" name = "frmMeal">
+            <div class = "edit-block">
+
+                <p class = "edit-label ">Label</p>
+                <input class = "edit-text" name = "label" ng-model="meal.label" type = "text" placeholder="enter description"  />
+                <p class = "edit-label ">Dishes</p>
+                <textarea class = "edit-text" name = "dishes" ng-model = "meal.dishes"></textarea>
+            </div>
+            <div class = "edit-block">
+
+
+                <p class = "edit-label ">Amount</p>
+                <input  class= "edit-text" name = "food.amount" ng-model = "food.amount" type = "text" name = "amount" placeholder="amount" />
+                <p class = "edit-label ">Unit</p>
+                <input class = "edit-text"  name = "food.unit" ng-model = "food.unit" type = "text" name = "unit" placeholder="unit" />
+                <p class = "edit-label ">Ingredient</p>
+                <input class = "edit-text" name = "food.label" ng-model = "food.label" type = "text" name = "food" placeholder="food" />
+                <button ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
+                <p class = "edit-label ">Ingredients</p>
+                <table class = "food-list">
+                    <tr><td>amt     </td><td>unit     </td><td>food     </td><TD>nuke</TD></tr>
+                <tr ng-repeat = "ingredient in arrFoods">
+                    <td>{{ingredient.amount}}</td>
+                    <td>{{ingredient.unit}}</td>
+                    <td>{{ingredient.label}}</td>
+                    <td><button class = "pop-food" ng-click = "popFood($index)">-</button></td>
+                </tr>
+
+                </table>
+            </div>
+
+            <div class = "edit-block">
+
+
+                <p class = "edit-label ">Instructions</p>
+                <textarea class = "edit-text"  name = "instructions" ng-model = "meal.instructions"></textarea>
+            </div>
+            <div class = "edit-block">
+
+                <input type="submit"  value="Save" ng-click = "saveMeal(meal)" />
+                <button ng-click="cancelMeal()">Cancel </button>
+                <button ng-click="deleteMeal()">Delete </button>
+            </div>
+        </form>
+
+
+
+
+</div>

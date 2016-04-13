@@ -14,17 +14,17 @@
 
 <div ng-repeat="day  in arrWeek" class = "week-day">
     <p>Date:{{day.meal_date}}<button ng-click = "listDay(day.id)" ng-show = "!day.in_list && day.id ">list</button></p>
-    <div class = "day-line" >
+    <div class = "day-line" ng-click="editMeal(day.breakfast_id,'breakfast')" >
         <select ng-model="day.breakfast_cook_id" name = "breakfast_cook"  ng-change = "setBreakfastCook(day.breakfast_cook_id, day.id)" ng-disabled = "!day.breakfast_id">
 
 
             <option ng-repeat="cook in arrCooks" value="{{cook.cook_id}}">{{cook.cook_label}}</option>
         </select>
 
-
-        Breakfast:{{day.breakfast_label}}<button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.id)" ng-disabled = "!breakfast_id" >grab Breakfast</button>
+        Breakfast:{{day.breakfast_label}}
+        <button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.id)" ng-disabled = "!breakfast_id" >grab Breakfast</button>
     </div>
-    <div class = "day-line" >
+    <div class = "day-line" ng-click="editMeal(day.lunch_id,'lunch')" >
         <select ng-model="day.lunch_cook_id" name = "lunch_cook"  ng-change = "setLunchCook(day.lunch_cook_id, day.id)" ng-disabled = "!day.lunch_id">
 
 
@@ -33,7 +33,7 @@
 
         Lunch:{{day.lunch_label}}<button class = "grab-meal" ng-click = "grabLunch(day.meal_date, day.id)" ng-disabled = "!lunch_id" >grab Lunch</button>
     </div>
-    <div class = "day-line" >
+    <div class = "day-line" ng-click="editMeal(day.dinner_id,'dinner')" >
         <select ng-model="day.dinner_cook_id" name = "dinner_cook"  ng-change = "setDinnerCook(day.dinner_cook_id, day.id)" ng-disabled = "!day.dinner_id">
 
 

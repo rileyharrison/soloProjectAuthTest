@@ -7,53 +7,83 @@ xdiv {
      background-color: #ffffff;
 
 }
+body{
+    font-family: Century Gothic, sans-serif;
+
+}
+.edit-block{
+    line-height: 60%;
+    padding: 2px;
+    border-radius: 5px;
+    margin: 5px;
+     border: 1px solid black;
+     background-color: #ffffff;
+
+}
+.edit-text{
+    width: 90%;
+}
+
+body {
+	margin:0;
+	padding:0;
+}
 
 .meal-pick{
-    width: 300px;
+    width: 100%;
+    border-radius: 5px;
 }
 .food-list{
     background-color: #ffffff;
     border: 1px solid black;
-    width: 200px;
+    width: 90%;
 
 }
 .list-container{
-    width: 500px;
-    float:left;
-    display: inline-block;
+    width: 20%;
+    float: left;
     background-color: red;
-
+    height: 1000px;
 
 
 }
 .week-container{
-    width: 500px;
-    display: inline-block;
+    width: 40%;
+    float: left;
     background-color: green;
+    height: 1000px;
+
 
 
 
 }
 .meal-container{
-    width: 500px;
-    display: inline-block;
+    width: 20%;
+    float: left;
     background-color: blue;
+    height: 1000px;
+
+
+
+
+}
+.edit-container{
+    width: 20%;
+    float: right;
+    background-color: teal;
+    height: 1000px;
+
+
 
 
 }
 .meal-box-col{
-    display: block;
 
-    width: 300px;
-    background-color: purple;
-    float: left;
 
 }
 .meal-edit-col{
 
-    width: 300px;
-    background-color: salmon;
-    float: right;
+
 
 
 }
@@ -115,13 +145,11 @@ xdiv {
 }
 
 .meal-box-col{
-    width: 25%;
-    float: left;
+
 
 }
 .meal-edit-col{
-    width: 25%;
-    float: right;
+
 
 
 }

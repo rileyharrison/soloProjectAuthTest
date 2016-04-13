@@ -9,21 +9,17 @@
     <script type="text/javascript" src="/vendors/angular.min.js"></script>
     <script type="text/javascript" src="/assets/scripts/app.js"></script>
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-cloak>
     <div class="planner" ng-controller="PlanController">
 
 
-        <div class = "list-container" ng-include = "'list.html'">
+                    <div class = "list-container" ng-include = "'list.html'"></div>
 
-        </div>
-        <div class = "week-container" ng-include = "'week.html'" >
+                    <div class = "week-container" ng-include = "'week.html'" ></div>
 
-        </div>
-        <div class = "meal-container" ng-include="'meals.html'" >
+                    <div class = "meal-container" ng-include="'meals.html'" ></div>
 
+                    <div class = "edit-container" ng-include="'edit.html'" ></div>
 
-        </div>
-
-    </div>
 </body>
 </html>

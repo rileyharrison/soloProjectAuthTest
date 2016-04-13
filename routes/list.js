@@ -3,6 +3,49 @@ var router = express.Router();
 var connectionString = require('../modules/connection');
 
 var pg = require('pg');
+router.get("/foods", function(req,res){
+
+
+
+  console.log("fetching  INGREIDENTS with SUPER fancy SQL");
+
+  pg.connect(connectionString, function(err, client, done){
+    if (err){
+      console.log('error connecting to DB:', err);
+      res.status(500).send(err);
+      done();
+      return;
+    }
+    var results=[];
+
+
+    strNewSql = 'SELECT SUM (fld_amount) AS "count", fld_unit, fld_label FROM tbl_ingredients ';
+    strNewSql += 'JOIN tbl_meals ON tbl_ingredients.fld_meal_id = tbl_meals.id JOIN tbl_days';
+    strNewSql +=' ON (tbl_meals.id = tbl_days.breakfast_id OR tbl_meals.id = tbl_days.lunch_id ';
+    strNewSql += ' OR tbl_meals.id = tbl_days.dinner_id) WHERE tbl_days.in_list = ';
+    strNewSql += ' TRUE  GROUP BY fld_label, fld_unit ORDER BY fld_label;';
+
+    console.log("strNewSql=" , strNewSql);
+
+    var query = client.query(strNewSql);
+    query.on('row', function(row){
+
+      results.push(row);
+    //   console.log("row=", row);
+    });
+    query.on('end', function(){
+      res.send(results);
+      done();
+    });
+
+    query.on('error', function(error){
+      console.log("error returning days:", error);
+      res.status(500).send(error);
+      done();
+
+  });
+});
+});
 
 router.get("/*", function(req,res){
 
@@ -30,7 +73,13 @@ router.get("/*", function(req,res){
 
     strSql += "WHERE in_list = 'TRUE' ORDER BY meal_date;";
 
-    console.log("strSql=" , strSql);
+    strNewSql = 'SELECT SUM (fld_amount) AS "count", fld_unit, fld_label FROM tbl_ingredients ';
+    strNewSql += 'JOIN tbl_meals ON tbl_ingredients.fld_meal_id = tbl_meals.id JOIN tbl_days';
+    strNewSql +=' ON (tbl_meals.id = tbl_days.breakfast_id OR tbl_meals.id = tbl_days.lunch_id ';
+    strNewSql += ' OR tbl_meals.id = tbl_days.dinner_id) WHERE tbl_days.in_list = ';
+    strNewSql += ' TRUE  GROUP BY fld_label, fld_unit ORDER BY fld_label;';
+
+    console.log("strNewSql=" , strSql);
 
     var query = client.query(strSql);
     query.on('row', function(row){
@@ -51,6 +100,8 @@ router.get("/*", function(req,res){
   });
 });
 });
+
+
 
 router.put("/*", function(req,res){
     console.log("in LIST.js, updating edited DAY:",req.body);

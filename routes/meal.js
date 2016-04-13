@@ -54,6 +54,8 @@ router.post("/*", function(req,res){
             }
         };
 
+        strSql = strSql.replace("'undefined'","''");
+
         console.log("goint to insert ingredients", strSql);
         var query = client.query(strSql);
         query.on('end', function(){
@@ -128,6 +130,7 @@ router.put("/*", function(req,res){
     };
 
 
+    strSql = strSql.replace("'undefined'","''");
 
 
     console.log("UPDATE MEAL ************ strSql = ", strSql);
