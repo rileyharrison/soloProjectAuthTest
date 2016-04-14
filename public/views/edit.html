@@ -21,7 +21,7 @@
                 <button ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
                 <p class = "edit-label ">Ingredients</p>
                 <table class = "food-list">
-                    <tr class = "table-header"><td>amt     </td><td>unit     </td><td>food     </td><TD>nuke</TD></tr>
+                    <tr class = "table-header"><td><b>Amount</b></td><td><b>Unit</b></td><td><b>Food</b></td><td><b>Remove</b></td></tr>
                 <tr ng-repeat = "ingredient in arrFoods">
                     <td>{{ingredient.amount}}</td>
                     <td>{{ingredient.unit}}</td>

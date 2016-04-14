@@ -7,12 +7,28 @@ body{
     margin:0;
     padding:0;
     background-image: url("/images/food.jpg");
-    background-size: auto;
+    background-size: 100%;
     line-height: 50%;
 
 
 }
 p{
+    margin: 5px;
+}
+.login-wrapper{
+    line-height: 60%;
+    padding: 2px;
+    border-radius: 5px;
+    margin: 5px;
+     background-color: #ffffff;
+     border-style: none;
+     width: 20%;
+     height: 10%;
+     margin-left: 40%;
+     margin-top: 10%;
+}
+.login-text{
+    width: 80%;
     margin: 5px;
 }
 .list-ingredients{
@@ -41,6 +57,7 @@ p{
 
 
 .edit-block{
+    opacity: .9;
     line-height: 60%;
     padding: 2px;
     border-radius: 5px;
@@ -61,6 +78,7 @@ p{
 
 
 .meal-pick{
+    opacity: .9;
     width: 100%;
     border-radius: 5px;
     margin-top: 3px;
@@ -120,6 +138,7 @@ p{
 
 }
 .shopping-list{
+    opacity: .9;
     border-radius: 5px;
     margin: 5px;
      line-height: 100%;
@@ -142,6 +161,7 @@ p{
 }
 
 .week-day  {
+    opacity: .9;
     line-height: 40%;
     padding: 2px;
     border-radius: 5px;
