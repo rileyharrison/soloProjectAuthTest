@@ -1,13 +1,35 @@
 
 body{
     font-family: Century Gothic, sans-serif;
+    /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+    font-size: 12px;
+    color: #660066;
     margin:0;
     padding:0;
+    background-image: url("/images/food.jpg");
+    background-size: auto;
+    line-height: 50%;
+
+
+}
+p{
+    margin: 5px;
+}
+.list-ingredients{
+    line-height: 30%;
+}
+.list-day{
+}
+.list-me{
+    margin: 0;
+    height: 10px;
+    margin-left: 20px;
 
 }
 .planner{
     background-color: grey;
-    height: 100px;
+
+
 }
 
 .week-nav{
@@ -30,6 +52,8 @@ body{
 .edit-text{
     width: 90%;
 }
+
+
 .edit-instructions{
     height: 200px;
     width: 90%;
@@ -39,6 +63,9 @@ body{
 .meal-pick{
     width: 100%;
     border-radius: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+
 }
 .food-list{
     background-color: #ffffff;
@@ -48,11 +75,13 @@ body{
 
 }
 .list-container{
+
+
     width: 20%;
     float: left;
-    background-color: red;
     height: 1000px;
     border-style: none;
+
 
 
 
@@ -60,7 +89,6 @@ body{
 .week-container{
     width: 40%;
     float: left;
-    background-color: green;
     height: 1000px;
     border-style: none;
 
@@ -72,7 +100,6 @@ body{
 .meal-container{
     width: 20%;
     float: left;
-    background-color: blue;
     height: 1000px;
     border-style: none;
 
@@ -84,7 +111,6 @@ body{
 .edit-container{
     width: 20%;
     float: right;
-    background-color: teal;
     height: 1000px;
     border-style: none;
 
@@ -92,6 +118,17 @@ body{
 
 
 
+}
+.shopping-list{
+    border-radius: 5px;
+    margin: 5px;
+     line-height: 100%;
+     padding: 2px;
+     background-color: #ffffff;
+     border-style: none;
+
+}
+.shopping-list p{
 }
 .meal-box-col{
 
@@ -103,19 +140,9 @@ body{
 
 
 }
-.shopping-list{
-    border-radius: 5px;
-    margin: 5px;
-     line-height: 80%;
-     padding: 2px;
-     background-color: #ffffff;
-     border-style: none;
 
-
-
-}
-.week-day{
-    line-height: 60%;
+.week-day  {
+    line-height: 40%;
     padding: 2px;
     border-radius: 5px;
     margin: 5px;
