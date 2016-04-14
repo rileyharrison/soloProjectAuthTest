@@ -15,7 +15,7 @@
 <div ng-class="{ 'day-unlisted': !day.in_list   }" ng-repeat="day  in arrWeek" class = "week-day">
     <p>{{day.meal_date}}<button class = "list-me" ng-click = "listDay(day.id)" ng-show = "!day.in_list && day.id ">list</button></p>
     <div class = "day-line"  >
-        <select ng-model="day.breakfast_cook_id" name = "breakfast_cook"  ng-change = "setBreakfastCook(day.breakfast_cook_id, day.id)" ng-disabled = "!day.breakfast_id">
+        <select class = "pick-cook" ng-model="day.breakfast_cook_id" name = "breakfast_cook"  ng-change = "setBreakfastCook(day.breakfast_cook_id, day.id)" ng-disabled = "!day.breakfast_id">
 
 
             <option ng-repeat="cook in arrCooks" value="{{cook.cook_id}}">{{cook.cook_label}}</option>
@@ -25,7 +25,7 @@
         <button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.id)" ng-disabled = "!breakfast_id" >+ Breakfast</button>
     </div>
     <div class = "day-line"  >
-        <select ng-model="day.lunch_cook_id" name = "lunch_cook"  ng-change = "setLunchCook(day.lunch_cook_id, day.id)" ng-disabled = "!day.lunch_id">
+        <select  class = "pick-cook" ng-model="day.lunch_cook_id" name = "lunch_cook"  ng-change = "setLunchCook(day.lunch_cook_id, day.id)" ng-disabled = "!day.lunch_id">
 
 
             <option ng-repeat="cook in arrCooks" value="{{cook.cook_id}}">{{cook.cook_label}}</option>
@@ -35,7 +35,7 @@
         <button class = "grab-meal" ng-click = "grabLunch(day.meal_date, day.id)" ng-disabled = "!lunch_id" >+ Lunch</button>
     </div>
     <div class = "day-line" ng-click="editMeal(day.dinner_id,'dinner')" >
-        <select ng-model="day.dinner_cook_id" name = "dinner_cook"  ng-change = "setDinnerCook(day.dinner_cook_id, day.id)" ng-disabled = "!day.dinner_id">
+        <select  class = "pick-cook" ng-model="day.dinner_cook_id" name = "dinner_cook"  ng-change = "setDinnerCook(day.dinner_cook_id, day.id)" ng-disabled = "!day.dinner_id">
 
 
             <option ng-repeat="cook in arrCooks" value="{{cook.cook_id}}">{{cook.cook_label}}</option>

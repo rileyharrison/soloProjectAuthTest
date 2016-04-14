@@ -9,5 +9,17 @@ router.post('/',
         failureRedirect: '/views/failure.html'
     })
 );
+// riley added
+
+
+router.get('/logout', function (req, res){
+    console.log("Trying to logout, am I here");
+    req.logout();
+    res.redirect('/');
+
+  });
+
+
+
 
 module.exports = router;

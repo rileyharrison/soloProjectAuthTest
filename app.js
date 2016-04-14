@@ -41,6 +41,8 @@ app.use('/meal', meal);
 app.use('/day', day);
 app.use('/list', list);
 app.use('/food', food);
+app.use('/index', index);
+
 
 // Serve back static files
 app.use(express.static('public'));

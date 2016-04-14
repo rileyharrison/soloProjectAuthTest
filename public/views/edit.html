@@ -18,7 +18,8 @@
                 <input class = "edit-text"  name = "food.unit" ng-model = "food.unit" type = "text" name = "unit" placeholder="unit" />
                 <p class = "edit-label ">Ingredient</p>
                 <input class = "edit-text" name = "food.label" ng-model = "food.label" type = "text" name = "food" placeholder="food" />
-                <button ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
+                
+                <button class = "add-food" ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
                 <p class = "edit-label ">Ingredients</p>
                 <table class = "food-list">
                     <tr class = "table-header"><td><b>Amount</b></td><td><b>Unit</b></td><td><b>Food</b></td><td><b>Remove</b></td></tr>
@@ -36,13 +37,16 @@
 
 
                 <p class = "edit-label ">Instructions</p>
-                <textarea class = "edit-instructions"  name = "instructions" ng-model = "meal.instructions"></textarea>
+                <textarea class = "edit-text"  name = "instructions" ng-model = "meal.instructions"></textarea>
             </div>
             <div class = "edit-block">
+                <input class = "meal-nav"  type="submit"  value="Save" ng-click = "saveMeal(meal)" />
 
-                <input type="submit"  value="Save" ng-click = "saveMeal(meal)" />
-                <button ng-click="cancelMeal()">Cancel </button>
-                <button ng-click="deleteMeal()">Delete </button>
+
+                <button class = "meal-nav"    ng-click="cancelMeal()">Cancel </button>
+                <button class = "meal-nav"  ng-click="deleteMeal()">Delete </button>
+
+
             </div>
         </form>
 

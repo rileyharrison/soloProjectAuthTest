@@ -16,15 +16,15 @@ myApp.controller('UserController', ['$scope', '$http', '$window', function($scop
 }]);
 
 myApp.controller('PlanController', ['$scope', '$http', '$window', function($scope, $http, $window) {
-    // $scope.userName;
-    // $http.get('/user').then(function(response) {
-    //     if(response.data) {
-    //         $scope.userName = response.data.username;
-    //         console.log('In Plan Controller, User Data: ', $scope.userName);
-    //     } else {
-    //         $window.location.href = '/index.html';
-    //     }
-    // });
+    $scope.userName;
+    $http.get('/user').then(function(response) {
+        if(response.data) {
+            $scope.userName = response.data.username;
+            console.log('In Plan Controller, User Data: ', $scope.userName);
+        } else {
+            $window.location.href = '/index.html';
+        }
+    });
     // This happens after page load, which means it has authenticated if it was ever going to
     // NOT SECURE
 
@@ -68,6 +68,27 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     // getMeals();
 
     // getList();
+
+    $scope.logOut = function(){
+
+        console.log("in the app, logout?");
+
+        $http.get('/index/logout').then(function(response) {
+             $window.location.href = '/index.html';
+
+            // if(response.data) {
+            //     $scope.userName = response.data.username;
+            //     console.log('User Data: ', $scope.userName);
+            // } else {
+            //     $window.location.href = '/index.html';
+            // }
+        });
+
+
+
+
+    };
+
     $scope.addFood = function(amount, unit, label){
         if (amount == undefined){
             amount = '';
