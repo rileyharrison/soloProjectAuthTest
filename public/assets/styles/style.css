@@ -19,6 +19,10 @@ p{
 option[selected] {
     color: #0047b3;
 }
+.list-date{
+    font-weight: bold;
+
+}
 .login-wrapper{
     line-height: 60%;
     padding: 2px;
@@ -39,6 +43,7 @@ option[selected] {
     line-height: 30%;
 }
 .list-day{
+    margin-bottom: 10px;
 }
 .list-me{
     margin: 0;
@@ -249,8 +254,8 @@ option[selected] {
 }
 .meal-nav{
 
-    margin-right: 10px;
-    width: 80px;
+    margin-right: 5px;
+    width: 40px;
     color: #0047b3;
     border-style: none;
     background-color: #cce0ff;
@@ -280,6 +285,15 @@ option[selected] {
     margin-left: 5px;
 
 
+}
+.pop-food{
+    float: left;
+    width: 20px;
+    color: #0047b3;
+    border-style: none;
+    background-color: #cce0ff;
+    border-radius: 5px;
+    padding: 0px;
 }
 
 

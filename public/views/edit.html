@@ -18,11 +18,11 @@
                 <input class = "edit-text"  name = "food.unit" ng-model = "food.unit" type = "text" name = "unit" placeholder="unit" />
                 <p class = "edit-label ">Ingredient</p>
                 <input class = "edit-text" name = "food.label" ng-model = "food.label" type = "text" name = "food" placeholder="food" />
-                
+
                 <button class = "add-food" ng-click = "addFood(food.amount, food.unit, food.label)">Add</button>
                 <p class = "edit-label ">Ingredients</p>
                 <table class = "food-list">
-                    <tr class = "table-header"><td><b>Amount</b></td><td><b>Unit</b></td><td><b>Food</b></td><td><b>Remove</b></td></tr>
+                    <tr class = "table-header"><td><b>Amt</b></td><td><b>Unit</b></td><td><b>Food</b></td><td><b>Remove</b></td></tr>
                 <tr ng-repeat = "ingredient in arrFoods">
                     <td>{{ingredient.amount}}</td>
                     <td>{{ingredient.unit}}</td>
