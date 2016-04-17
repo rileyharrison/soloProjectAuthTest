@@ -239,6 +239,19 @@ option[selected] {
     text-align: left;
     padding-left: 5px;
 }
+
+.clear-meal{
+
+    float: right;
+    width: 70px;
+    color: #0047b3;
+    border-style: none;
+    background-color: #cce0ff;
+    border-radius: 5px;
+    padding: 0px;
+    text-align: left;
+    padding-left: 5px;
+}
 .grab-meal:disabled {
     color: #80b3ff;
 }

@@ -59,6 +59,8 @@ router.put("/*", function(req,res){
     var strSql = '';
     var arrFields =[];
 
+    console.log("hey Breakfast Id = ", breakfast_id);
+
     pg.connect(connectionString, function(err, client, done){
         if (err){
           console.log('error connecting to DB:', err);
@@ -69,32 +71,57 @@ router.put("/*", function(req,res){
 
     strSql = "UPDATE tbl_days SET ";
 
-    if (breakfast_id){
-        strSql += " breakfast_id = '" + breakfast_id + "' "
+    // if (breakfast_id){
+    //     strSql += " breakfast_id = '" + breakfast_id + "' "
+    // };
+
+    var strFields = '';
+
+    if (typeof breakfast_id !== 'undefined') {
+        strFields += " breakfast_id = '" + breakfast_id + "' "
+    }
+
+    if (typeof lunch_id !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " lunch_id = '" + lunch_id + "' "
     };
-    if (lunch_id){
-        strSql += " lunch_id = '" + lunch_id + "' "
+    if (typeof dinner_id !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " dinner_id = '" + dinner_id + "'"
     };
-    if (dinner_id){
-        strSql += " dinner_id = '" + dinner_id + "'"
+    if (typeof breakfast_cook_id !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " breakfast_cook_id = '" + breakfast_cook_id + "' "
     };
-    if (breakfast_cook_id){
-        strSql += " breakfast_cook_id = '" + breakfast_cook_id + "' "
+    if (typeof lunch_cook_id !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " lunch_cook_id = '" + lunch_cook_id + "' "
     };
-    if (lunch_cook_id){
-        strSql += " lunch_cook_id = '" + lunch_cook_id + "' "
+    if (typeof dinner_cook_id !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " dinner_cook_id = '" + dinner_cook_id + "' "
     };
-    if (dinner_cook_id){
-        strSql += " dinner_cook_id = '" + dinner_cook_id + "' "
-    };
-    if (in_list){
-        strSql += " in_list = '" + in_list + "' "
+    if (typeof in_list !== 'undefined'){
+        if (strFields.length >0){
+            strFields += ',';
+        }
+        strFields += " in_list = '" + in_list + "' "
     };
 
 
 
 
-    strSql += " WHERE id = '" + id + "';";
+    strSql += strFields +" WHERE id = '" + id + "';";
     console.log("strSql = ", strSql);
 
     var query = client.query(strSql);

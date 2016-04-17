@@ -230,6 +230,28 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
 
     };
 
+    $scope.clearMeal = function(dayId, mealType){
+        var day = {};
+        day.id = dayId;
+        if (mealType == 'breakfast'){
+            day.breakfast_id = 0;
+            day.breakfast_cook_id = 0;
+        };
+        if (mealType == 'lunch'){
+            day.lunch_id = 0;
+            day.lunch_cook_id = 0;
+        };
+        if (mealType == 'dinner'){
+            day.dinner_id = 0;
+            day.dinner_cook_id = 0;
+        };
+        $http.put("/day", day).then(function(response){
+            console.log("day updated", response);
+            getDays();
+        });
+
+    }
+
     $scope.grabBreakfast = function(mealDate, dayId){
         console.log("I am going to try and stick a breakfast into this date", mealDate, "with meal id", $scope.breakfast_id, "day id", dayId);
         var day = {};
@@ -414,15 +436,26 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
     };
 
     $scope.editMeal = function(mealId, mealType){
+
+        if (mealId == 0){
+            return;
+        }
         $scope.meal = {};
         $scope.arrFoods =[];
         $scope.food = {};
 
         // check if existing mealId = passed, if so, close form
         // TODO
+        console.log(" START  before,show meal form = ", $scope.showMealForm);
+
+        if ($scope.showMealFormId == mealId){
+            console.log("we got the same one");
+        } else {
+            console.log ("scope id, mealId passed", $scope.showMealFormId, mealId)
+        }
 
 
-        if ($scope.showMealForm ==false ){
+        if ($scope.showMealForm == false ){
             $scope.showMealForm = true;
             $scope.showMealFormId = mealId;
         } else {
@@ -431,11 +464,14 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
             };
         };
 
+        console.log("after,show meal form = ", $scope.showMealForm);
+
+
 
 
 
         console.log("should we clear", mealType);
-        console.log("mealid length", mealId.length);
+        console.log("mealid ", mealId);
         if (mealId.length == 0){
             if (mealType =="breakfast"){
                 $scope.breakfast_id="";
@@ -449,7 +485,7 @@ myApp.controller('PlanController', ['$scope', '$http', '$window', function($scop
         };
 
 
-        console.log("going to edit meal with id:", mealId);
+        console.log(" END going to edit meal with id:", mealId);
 
         for (var i= 0; i<arrMeals.length; i++){
             // console.log("checking meal", arrMeals[i]);

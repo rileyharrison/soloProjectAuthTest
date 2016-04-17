@@ -22,7 +22,8 @@
         </select>
 
         <span ng-click="editMeal(day.breakfast_id,'breakfast')" class = "week-meal-span" >Breakfast: {{day.breakfast_label}}</span>
-        <button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.id)" ng-disabled = "!breakfast_id" >+ Breakfast</button>
+        <button class = "grab-meal" ng-click = "grabBreakfast(day.meal_date, day.id)" ng-disabled = "!breakfast_id" ng-show = "!day.breakfast_id">+ Breakfast</button>
+        <button class = "clear-meal" ng-click = "clearMeal(day.id, 'breakfast')"   ng-show = "day.breakfast_id">- Breakfast</button>
     </div>
     <div class = "day-line"  >
         <select  class = "pick-cook" ng-model="day.lunch_cook_id" name = "lunch_cook"  ng-change = "setLunchCook(day.lunch_cook_id, day.id)" ng-disabled = "!day.lunch_id">
@@ -32,9 +33,11 @@
         </select>
 
         <span ng-click="editMeal(day.lunch_id,'lunch')" class = "week-meal-span" >Lunch: {{day.lunch_label}}</span>
-        <button class = "grab-meal" ng-click = "grabLunch(day.meal_date, day.id)" ng-disabled = "!lunch_id" >+ Lunch</button>
+        <button class = "grab-meal" ng-click = "grabLunch(day.meal_date, day.id)" ng-disabled = "!lunch_id" ng-show = "!day.lunch_id" >+ Lunch</button>
+        <button class = "clear-meal" ng-click = "clearMeal(day.id, 'lunch')"   ng-show = "day.lunch_id">- Lunch</button>
+
     </div>
-    <div class = "day-line" ng-click="editMeal(day.dinner_id,'dinner')" >
+    <div class = "day-line" >
         <select  class = "pick-cook" ng-model="day.dinner_cook_id" name = "dinner_cook"  ng-change = "setDinnerCook(day.dinner_cook_id, day.id)" ng-disabled = "!day.dinner_id">
 
 
@@ -42,7 +45,9 @@
         </select>
 
         <span ng-click="editMeal(day.dinner_id,'dinner')" class = "week-meal-span" >Dinner: {{day.dinner_label}}</span>
-        <button class = "grab-meal" ng-click = "grabDinner(day.meal_date, day.id)" ng-disabled = "!dinner_id">+ Dinner</button>
+        <button class = "grab-meal" ng-click = "grabDinner(day.meal_date, day.id)" ng-disabled = "!dinner_id" ng-show = "!day.dinner_id">+ Dinner</button>
+        <button class = "clear-meal" ng-click = "clearMeal(day.id, 'dinner')"   ng-show = "day.dinner_id">- Dinner</button>
+
     </div>
 </div>
 <button ng-click = "nextWeek()" class = "week-nav">Next</button>
