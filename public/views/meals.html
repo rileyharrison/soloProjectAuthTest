@@ -2,14 +2,14 @@
 
         <div class = "breakfasts">
             <button class = "new-meal" ng-click="newMeal('breakfast')">New Breakfast </button>
-            <select  ng-attr-size="{{ arrBreakfasts.length }}" class = "meal-pick"  name = "breakfast" ng-model="breakfast.id" ng-change="editMeal(breakfast.id, 'breakfast')" ng-click="editMeal(breakfast.id, 'breakfast')">
+            <select  ng-attr-size="{{ arrBreakfasts.length + 2}}" class = "meal-pick"  name = "breakfast" ng-model="breakfast.id" ng-change="editMeal(breakfast.id, 'breakfast')" ng-click="editMeal(breakfast.id, 'breakfast')">
                 <option value = "" >Clear<span class = "my-span"></span></option>
                 <option ng-repeat="meal in arrBreakfasts" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
             </select>
         </div>
         <div class = "lunches">
             <button class = "new-meal" ng-click="newMeal('lunch')">New Lunch </button>
-            <select ng-attr-size="{{ arrLunches.length }}" class = "meal-pick"  name = "lunch"ng-model="lunch.id" ng-change="editMeal(lunch.id,'lunch')" ng-click="editMeal(lunch.id,'lunch')">
+            <select ng-attr-size="{{ arrLunches.length + 2 }}" class = "meal-pick"  name = "lunch"ng-model="lunch.id" ng-change="editMeal(lunch.id,'lunch')" ng-click="editMeal(lunch.id,'lunch')">
                 <option value = "" ><span class = "my-span">Clear</span></option>
 
                 <option ng-repeat="meal in arrLunches" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
@@ -19,7 +19,7 @@
         <div class = "dinners">
             <button class = "new-meal" ng-click="newMeal('dinner')">New Dinner </button>
 
-        <select ng-attr-size="{{ arrDinners.length }}" class = "meal-pick"  name = "dinner" ng-model="dinner.id" ng-change="editMeal(dinner.id,'dinner')" ng-click="editMeal(dinner.id,'dinner')">
+        <select ng-attr-size="{{ arrDinners.length + 2}}" class = "meal-pick"  name = "dinner" ng-model="dinner.id" ng-change="editMeal(dinner.id,'dinner')" ng-click="editMeal(dinner.id,'dinner')">
             <option value = "" >Clear<span class = "my-span"></span></option>
 
             <option ng-repeat="meal in arrDinners" value="{{meal.id}}">{{meal.fld_meal_label}}</option>
